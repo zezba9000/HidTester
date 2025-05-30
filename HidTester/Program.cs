@@ -32,7 +32,7 @@ namespace HidTester
 	{
         static int vid = 0x0DB0;
         static int pid = 0x1901;
-        static int readDelay = 100;
+        static int readDelay = 1000;
         static byte[] dataToWrite = new byte[8];
         static byte[] dataToRead = new byte[1024];
         static Stopwatch stopwatch = new Stopwatch();
@@ -126,14 +126,14 @@ namespace HidTester
 
 		static void WriteDevice(HidDevice device)
 		{
+            Log.WriteLine($"Device: {device.DevicePath}");
+
             // get device desc
-            Log.WriteLine($"Getting Device desc for: {device.DevicePath}");
             var desc = device.GetReportDescriptor();
             foreach (var report in desc.Reports)
             {
                 Log.WriteLine($"ReportID:{report.ReportID} ReportType:{report.ReportType}");
             }
-            Log.WriteLine();
 
             // open device
             Log.WriteLine("Opening HID stream...");
@@ -149,14 +149,9 @@ namespace HidTester
 
             using (hidStream)
             {
-                if (!hidStream.CanWrite)
-                {
-                    Log.WriteLine("Can't write");
-                    return;
-                }
-
-                hidStream.ReadTimeout = 5000;// 5 seconds
-                hidStream.WriteTimeout = 5000;// 5 seconds
+                // set timeouts
+                //hidStream.ReadTimeout = Timeout.Infinite;
+                //hidStream.WriteTimeout = Timeout.Infinite;
 
                 // test stuff
                 //var inputReceiver = desc.CreateHidDeviceInputReceiver();
@@ -166,10 +161,11 @@ namespace HidTester
                 hidStream.Write(dataToWrite);
 
                 // wait before read
-                Delay(readDelay);
-                //Thread.Sleep(readDelay);
+                //Delay(readDelay);
+                Thread.Sleep(readDelay);
 
                 // read response
+                Log.WriteLine("Reading data...");
                 int read = hidStream.Read(dataToRead);
                 if (read > 0)
                 {
