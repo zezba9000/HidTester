@@ -60,7 +60,7 @@ namespace HidTester
                     {
                         Log.WriteLine("-vid={dec|hex}");
                         Log.WriteLine("-pid={dec|hex}");
-                        Log.WriteLine("-readDelay={ms}");
+                        Log.WriteLine("-read-delay={ms}");
                         Log.WriteLine("-data-file={text-file-path} [each byte on its own line]");
                         return;
                     }
@@ -76,7 +76,7 @@ namespace HidTester
                         if (int.TryParse(parts[1], out int value)) pid = value;
                         else pid = Convert.ToInt32(parts[1], 16);
                     }
-                    else if (arg.StartsWith("-readDelay="))
+                    else if (arg.StartsWith("-read-delay="))
                     {
                         var parts = arg.Split('=');
                         if (int.TryParse(parts[1], out int value)) readDelay = value;
