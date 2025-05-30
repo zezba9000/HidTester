@@ -1,5 +1,5 @@
 # HidTester
-* HidSharp directly included as source for better debugging
+HidSharp directly included as source for better debugging
 
 ### Windows .NET Publishing
 * AOT: dotnet publish -r win-x64 -c Release /p:PublishAot=true
