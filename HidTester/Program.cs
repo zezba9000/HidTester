@@ -34,7 +34,6 @@ namespace HidTester
         static int pid = 0x1901;
         static int readDelay = 1000;
         static byte[] dataToWrite = new byte[8];
-        static byte[] dataToRead = new byte[1024];
         static Stopwatch stopwatch = new Stopwatch();
 
         static void Main(string[] args)
@@ -173,7 +172,8 @@ namespace HidTester
 
                 // read response
                 Log.WriteLine("Reading data...");
-                int read = hidStream.Read(dataToRead);
+                byte[] dataToRead = hidStream.Read();
+                int read = dataToRead.Length;
                 if (read > 0)
                 {
                     Log.WriteLine($"Read data size of {read}");
