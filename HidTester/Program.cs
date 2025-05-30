@@ -103,6 +103,8 @@ namespace HidTester
             Log.WriteLine($"Read after delay of {readDelay}ms");
 
             // get all devices
+            Log.WriteLine();
+            Log.WriteLine("Searching for HID devices...");
             HidSharpDiagnostics.EnableTracing = true;
             HidSharpDiagnostics.PerformStrictChecks = true;
 			var devices = DeviceList.Local.GetHidDevices(vid, pid);
@@ -110,7 +112,9 @@ namespace HidTester
 			{
 				try
 				{
-					WriteDevice(device);
+                    Log.WriteLine();
+                    Log.WriteLine();
+                    WriteDevice(device);
 				}
 				catch (Exception e)
 				{
@@ -122,19 +126,24 @@ namespace HidTester
 		static void WriteDevice(HidDevice device)
 		{
             // get device desc
-            Log.WriteLine("Getting Device desc...");
+            Log.WriteLine($"Getting Device desc for: {device.DevicePath}");
             var desc = device.GetReportDescriptor();
             foreach (var report in desc.Reports)
             {
-                Log.WriteLine($"ID:{report.ReportID} Type:{report.ReportType}");
+                Log.WriteLine($"ReportID:{report.ReportID} ReportType:{report.ReportType}");
             }
             Log.WriteLine();
 
             // open device
+            Log.WriteLine("Opening HID stream...");
             if (!device.TryOpen(out var hidStream))
             {
                 Log.WriteLine("Failed to open HID Stream");
                 return;
+            }
+            else
+            {
+                Log.WriteLine("Open HID stream Success!");
             }
 
             using (hidStream)
@@ -173,9 +182,8 @@ namespace HidTester
                 {
                     Log.WriteLine("No data read");
                 }
-
-                Log.WriteLine();
             }
         }
-	}
+
+    }
 }
