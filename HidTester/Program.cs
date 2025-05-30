@@ -95,6 +95,9 @@ namespace HidTester
                                 else buffer.Add(Convert.ToByte(line, 16));
                             }
                         }
+
+                        dataToWrite = buffer.ToArray();
+                        Log.WriteLine($"DataFile read with length: " + dataToWrite.Length.ToString());
                     }
                 }
             }
@@ -122,6 +125,10 @@ namespace HidTester
                     Log.WriteLine(e);
 				}
 			}
+
+            Log.WriteLine("Done!");
+            Log.WriteLine("(Hit Return to Exit)");
+            Console.ReadLine();
 		}
 
 		static void WriteDevice(HidDevice device)
