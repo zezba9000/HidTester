@@ -33,7 +33,7 @@ namespace HidTester
         static int vid = 0x0DB0;
         static int pid = 0x1901;
         static int readDelay = 1000;
-        static byte[] dataToWrite = new byte[8];
+        static byte[] dataToWrite = new byte[64];
         static Stopwatch stopwatch = new Stopwatch();
 
         static void Main(string[] args)
