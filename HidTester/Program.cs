@@ -28,13 +28,14 @@ namespace HidTester
         Testing = 6
     }
 
-    internal class Program
+    internal static class Program
 	{
         static int vid = 0x0DB0;
         static int pid = 0x1901;
         static int readDelay = 100;
         static byte[] dataToWrite = new byte[8];
         static byte[] dataToRead = new byte[1024];
+        static Stopwatch stopwatch = new Stopwatch();
 
         static void Main(string[] args)
 		{
@@ -165,7 +166,8 @@ namespace HidTester
                 hidStream.Write(dataToWrite);
 
                 // wait before read
-                Thread.Sleep(readDelay);
+                Delay(readDelay);
+                //Thread.Sleep(readDelay);
 
                 // read response
                 int read = hidStream.Read(dataToRead);
@@ -185,5 +187,14 @@ namespace HidTester
             }
         }
 
+        static void Delay(int ms)
+        {
+            stopwatch.Restart();
+            var spin = new SpinWait();
+            while (stopwatch.ElapsedMilliseconds < ms)
+            {
+                spin.SpinOnce();
+            }
+        }
     }
 }
