@@ -1,6 +1,13 @@
 # HidTester
 * HidSharp directly included as source for better debugging
 * Run as Admin/Root
+* Defaults to MSI-Claw gamepad if no args set
+```
+-vid={dec|hex}
+-pid={dec|hex}
+-read-delay={ms}
+-data-file={text-file-path} [each byte on its own line]
+```
 
 ### Windows .NET Publishing
 * AOT: dotnet publish -r win-x64 -c Release /p:PublishAot=true
