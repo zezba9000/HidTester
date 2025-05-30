@@ -98,6 +98,30 @@ namespace HidTester
                         dataToWrite = buffer.ToArray();
                         Log.WriteLine($"DataFile read with length: " + dataToWrite.Length.ToString());
                     }
+                    else if (arg == "-reset")
+                    {
+                        Log.WriteLine("Reset mode");
+                        vid = 0x0DB0;
+                        pid = 0x1903;
+                        readDelay = 1000;
+
+                        i = 0;
+                        dataToWrite[i++] = 0x0f;
+                        dataToWrite[i++] = 0x00;
+                        dataToWrite[i++] = 0x00;
+                        dataToWrite[i++] = 0x3c;
+                        dataToWrite[i++] = 0x21;
+                        dataToWrite[i++] = 0x01;
+                        dataToWrite[i++] = 0x01;
+                        dataToWrite[i++] = 0x1f;
+                        dataToWrite[i++] = 0x05;
+                        dataToWrite[i++] = 0x01;
+                        dataToWrite[i++] = 0x00;
+                        dataToWrite[i++] = 0x00;
+                        dataToWrite[i++] = 0x12;
+                        dataToWrite[i++] = 0x00;
+                        break;
+                    }
                 }
             }
 
