@@ -62,6 +62,7 @@ namespace HidTester
                         Log.WriteLine("-pid={dec|hex}");
                         Log.WriteLine("-read-delay={ms}");
                         Log.WriteLine("-data-file={text-file-path} [each byte on its own line]");
+                        Log.WriteLine("-list-all");
                         return;
                     }
                     else if (arg.StartsWith("-vid="))
@@ -121,6 +122,14 @@ namespace HidTester
                         dataToWrite[i++] = 0x12;
                         dataToWrite[i++] = 0x00;
                         break;
+                    }
+                    else if (arg == "-list-all")
+                    {
+                        foreach (var device in DeviceList.Local.GetHidDevices())
+                        {
+                            Log.WriteLine($"VendorID:{device.VendorID.ToString("x4")} ProductID:{device.ProductID.ToString("x4")} {device}");
+                        }
+                        return;
                     }
                 }
             }
